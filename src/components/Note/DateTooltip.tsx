@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from 'date-fns';
 import Tooltip from '../Tooltip';
+import styles from './Note.module.scss';
 
 type propTypes = {
   date: Date,
@@ -14,7 +15,7 @@ const DateTooltip = (props: propTypes) => {
       tooltip={date.toLocaleString()}
       subTooltip={subDate && `Created ${subDate.toLocaleString()}`}
     >
-      <time dateTime={date.toLocaleString()}>
+      <time dateTime={date.toLocaleString()} className={styles.time}>
         {subDate ? 'Updated' : 'Created'} {formatDistanceToNow(date)} ago
       </time>
     </Tooltip>

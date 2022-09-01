@@ -1,5 +1,46 @@
+@import '../../common/styles/color';
+
+.container {
+  background-color: $item_bg_color;
+  color: $item_color;
+}
+
 .label {
   min-width: 50px;
   width: 10vw;
   justify-content: center;
+  background-color: $active_color  !important;
+  border: none !important;
+  color: $item_color  !important;
+}
+
+.focused_label {
+  background-color: $focus_active_color  !important;
+}
+
+.input_container:focus-within>.label {
+  background-color: $focus_active_color  !important;
+}
+
+.input {
+  background-color: inherit !important;
+  color: inherit !important;
+
+  border: none !important;
+  border-bottom: 1px solid $active_color  !important;
+  border-radius: 0 !important;
+
+  &:focus {
+    border-color: $focus_active_color  !important;
+  }
+}
+
+.body {
+  max-height: 10rem;
+}
+
+.error {
+  position: absolute;
+  bottom: 0;
+  color: #dc3545;
 }

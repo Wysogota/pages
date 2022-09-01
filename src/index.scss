@@ -1,0 +1,22 @@
+@import './common/styles/color';
+
+body {
+  background-color: $bg_color  !important;
+  color: $color  !important;
+
+  margin: 0;
+  font-family: 'Courier New', monospace !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+*::selection {
+  background-color: $selection_bg_color !important;
+  color: $selection_color !important;
+}

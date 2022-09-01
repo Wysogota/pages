@@ -5,7 +5,7 @@ import { notesStore } from '../../store';
 
 const List = observer(() => {
   return (
-    <Row>
+    <Row as='section'>
       {notesStore.notes.map((note) =>
         <Note key={note.id} note={note} />
       )}

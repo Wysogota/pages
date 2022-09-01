@@ -1,10 +1,12 @@
 import { observer } from 'mobx-react-lite';
-import { Col, Button, FormControl } from 'react-bootstrap';
+import { Col, Button, FormControl, ButtonGroup } from 'react-bootstrap';
 import { Field, Form, Formik } from 'formik';
+import cx from 'classnames';
 import TextareaField from '../TextareaField';
 import DateTooltip from './DateTooltip';
 import { notesStore } from '../../store';
 import { Note as NoteType, NoteFormValues } from '../../types';
+import styles from './Note.module.scss';
 
 type propTypes = {
   note: NoteType;
@@ -29,26 +31,33 @@ const Note = observer((props: propTypes) => {
     notesStore.edit(editedNote);
   };
 
+  const noteClasses: string = cx(styles.note, 'p-3 rounded-2');
+  const titleClasses: string = cx(styles.input, 'shadow-none mb-2');
+  const bodyClasses: string = cx(styles.body, styles.input, 'shadow-none mb-1');
+
   return (
-    <Col>
+    <Col as='article' sm={6} md={4} lg={3} className='p-2'>
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
       >
-        <Form>
-          <FormControl as={Field} name='title' />
-          <FormControl as={TextareaField} name='body' style={{ height: '10rem' }} />
+        <Form className={noteClasses}>
+          <FormControl as={Field} name='title' placeholder='Enter title' className={titleClasses} />
+          <FormControl as={TextareaField} name='body' className={bodyClasses} />
 
           {updatedAt
             ? <DateTooltip date={updatedAt} subDate={createdAt} />
             : <DateTooltip date={createdAt} />
           }
 
-          <Button variant='primary' type='submit'>Update</Button>
-          <Button onClick={handleDelete}>Delete</Button>
+          <ButtonGroup className='w-100 pt-3'>
+            <Button variant='warning' type='submit' className='shadow-none'>Update</Button>
+            <Button variant='danger' onClick={handleDelete} className='shadow-none'>Delete</Button>
+          </ButtonGroup>
+
         </Form>
       </Formik>
-    </Col >
+    </Col>
   );
 });
 
