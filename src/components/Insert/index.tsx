@@ -4,23 +4,18 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { v4 as uuid } from 'uuid';
 import { notesStore } from '../../store';
 import TextareaField from '../TextareaField';
-import { Note } from '../../types';
+import { Note, NoteFormValues } from '../../types';
 import styles from './Insert.module.scss';
 import { INSERT_NOTE_SCHEMA } from '../../utils/validationSchemas';
 
-interface FormValues {
-  title: string;
-  body: string;
-}
-
-const initialValues: FormValues = {
+const initialValues: NoteFormValues = {
   title: '',
   body: '',
 };
 
 const Insert = observer(() => {
 
-  const onSubmit = (values: FormValues, formikBag: any): void => {
+  const onSubmit = (values: NoteFormValues, formikBag: any): void => {
     const note: Note = {
       ...values,
       id: uuid(),
