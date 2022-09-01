@@ -19,7 +19,7 @@ const Insert = observer(() => {
     const note: Note = {
       ...values,
       id: uuid(),
-      date: new Date(),
+      createdAt: new Date(),
     };
 
     notesStore.insert(note);

@@ -7,6 +7,7 @@ class NotesStore {
 
   constructor() {
     this.loadFromStorage();
+    makeAutoObservable(this);
     this.autoSaveToStorage();
   }
 
@@ -31,8 +32,11 @@ class NotesStore {
     if (loadedData) {
       let notes: Notes = JSON.parse(loadedData).notes;
       if (!isEmpty(notes)) {
-        this.notes = notes.map((note) => ({ ...note, date: new Date(note.date) }));
-        makeAutoObservable(this);
+        this.notes = notes.map((note) => ({
+          ...note,
+          createdAt: new Date(note.createdAt),
+          updatedAt: note.updatedAt ? new Date(note.updatedAt) : undefined,
+        }));
       }
     }
   }

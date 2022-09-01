@@ -1,20 +1,18 @@
 import { observer } from 'mobx-react-lite';
 import { Col, Button, FormControl } from 'react-bootstrap';
 import { Field, Form, Formik } from 'formik';
-import { formatDistanceToNow } from 'date-fns';
 import TextareaField from '../TextareaField';
-import Tooltip from '../Tooltip';
+import DateTooltip from './DateTooltip';
 import { notesStore } from '../../store';
 import { Note as NoteType, NoteFormValues } from '../../types';
 
-type NoteProps = {
+type propTypes = {
   note: NoteType;
 };
 
-const Note = observer((props: NoteProps) => {
+const Note = observer((props: propTypes) => {
   const { note } = props;
-  const { id, title, body, date } = note;
-
+  const { id, title, body, createdAt, updatedAt } = note;
   const initialValues: NoteFormValues = {
     title: title || '',
     body: body,
@@ -24,9 +22,9 @@ const Note = observer((props: NoteProps) => {
 
   const onSubmit = (values: NoteFormValues): void => {
     const editedNote: NoteType = {
-      id,
+      id, createdAt,
       ...values,
-      date: new Date(),
+      updatedAt: new Date(),
     };
     notesStore.edit(editedNote);
   };
@@ -41,17 +39,15 @@ const Note = observer((props: NoteProps) => {
           <FormControl as={Field} name='title' />
           <FormControl as={TextareaField} name='body' style={{ height: '10rem' }} />
 
-          <Tooltip tooltip={date.toLocaleString()}>
-            <time dateTime={date.toLocaleString()}>
-              Created {formatDistanceToNow(date)} ago
-            </time>
-          </Tooltip>
+          {updatedAt
+            ? <DateTooltip date={updatedAt} subDate={createdAt} />
+            : <DateTooltip date={createdAt} />
+          }
 
-          <Button variant='primary' type='submit'>Submit</Button>
+          <Button variant='primary' type='submit'>Update</Button>
           <Button onClick={handleDelete}>Delete</Button>
         </Form>
       </Formik>
-
     </Col >
   );
 });

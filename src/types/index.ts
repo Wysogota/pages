@@ -2,7 +2,8 @@ export type Note = {
   id: string,
   title?: string,
   body: string,
-  date: Date,
+  createdAt: Date,
+  updatedAt?: Date,
 };
 
 export type Notes = Array<Note>;
