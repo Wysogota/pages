@@ -5,9 +5,9 @@ $dropdown-dark-bg: $item_bg_color;
 $dropdown-dark-link-hover-bg: $hovered_item_bg_color;
 $dropdown-dark-link-active-bg: $hovered_item_bg_color;
 
-.btn {
+.btn,
+.form-control {
   box-shadow: none !important;
 }
-
 
 @import "~bootstrap/scss/bootstrap";

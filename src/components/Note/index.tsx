@@ -32,8 +32,8 @@ const Note = observer((props: propTypes) => {
   };
 
   const noteClasses: string = cx(styles.note, 'p-3 rounded-2');
-  const titleClasses: string = cx(styles.input, 'shadow-none mb-2');
-  const bodyClasses: string = cx(styles.body, styles.input, 'shadow-none mb-1');
+  const titleClasses: string = cx(styles.input, 'mb-2');
+  const bodyClasses: string = cx(styles.body, styles.input, 'mb-1');
 
   return (
     <Col as='article' sm={6} md={4} lg={3} className='p-2'>
@@ -51,8 +51,8 @@ const Note = observer((props: propTypes) => {
           }
 
           <ButtonGroup className='w-100 pt-3'>
-            <Button variant='warning' type='submit' className='shadow-none'>Update</Button>
-            <Button variant='danger' onClick={handleDelete} className='shadow-none'>Delete</Button>
+            <Button variant='warning' type='submit'>Update</Button>
+            <Button variant='danger' onClick={handleDelete}>Delete</Button>
           </ButtonGroup>
 
         </Form>

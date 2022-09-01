@@ -29,9 +29,9 @@ const Insert = observer(() => {
 
   const containerClasses: string = cx(styles.container, 'p-3 rounded-2');
   const titleContainerClasses: string = cx(styles.input_container, 'mb-3');
-  const titleClasses: string = cx(styles.input, 'shadow-none');
+  const titleClasses: string = cx(styles.input);
   const bodyContainerClasses: string = cx(styles.input_container, 'pb-4 mb-2 p-relative');
-  const bodyClasses: string = cx(styles.body, styles.input, 'shadow-none');
+  const bodyClasses: string = cx(styles.body, styles.input);
 
   return (
     <Row className='mb-5'>
