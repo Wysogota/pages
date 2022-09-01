@@ -1,0 +1,1 @@
+export { default as notesStore } from './Notes';
