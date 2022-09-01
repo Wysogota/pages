@@ -3,7 +3,7 @@ export type Note = {
   title?: string,
   body: string,
   createdAt: Date,
-  updatedAt?: Date,
+  updatedAt: Date,
 };
 
 export type Notes = Array<Note>;

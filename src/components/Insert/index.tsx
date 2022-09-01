@@ -21,6 +21,7 @@ const Insert = observer(() => {
       ...values,
       id: uuid(),
       createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     notesStore.insert(note);

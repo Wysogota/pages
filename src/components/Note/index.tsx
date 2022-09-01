@@ -45,16 +45,12 @@ const Note = observer((props: propTypes) => {
           <FormControl as={Field} name='title' placeholder='Enter title' className={titleClasses} />
           <FormControl as={TextareaField} name='body' className={bodyClasses} />
 
-          {updatedAt
-            ? <DateTooltip date={updatedAt} subDate={createdAt} />
-            : <DateTooltip date={createdAt} />
-          }
+          <DateTooltip createdAt={createdAt} updatedAt={updatedAt} />
 
           <ButtonGroup className='w-100 pt-3'>
             <Button variant='warning' type='submit'>Update</Button>
             <Button variant='danger' onClick={handleDelete}>Delete</Button>
           </ButtonGroup>
-
         </Form>
       </Formik>
     </Col>

@@ -37,11 +37,7 @@ class NotesStore {
     this.isFetching = true;
     getTestData().then((data) => {
       this.isFetching = false;
-
-      this.notes = data.map((note: Note) => ({
-        ...note,
-        createdAt: new Date(note.createdAt),
-      }));
+      this.notes = data.map((note: Note) => this.formatNote(note));
     });
   };
 
@@ -50,11 +46,7 @@ class NotesStore {
     if (loadedData) {
       let notes: Notes = JSON.parse(loadedData).notes;
       if (!isEmpty(notes)) {
-        this.notes = notes.map((note) => ({
-          ...note,
-          createdAt: new Date(note.createdAt),
-          updatedAt: note.updatedAt ? new Date(note.updatedAt) : undefined,
-        }));
+        this.notes = notes.map((note) => this.formatNote(note));
       }
     }
   }
@@ -67,6 +59,12 @@ class NotesStore {
       firstRun = false;
     });
   };
+
+  private formatNote = (note: Note): Note => ({
+    ...note,
+    createdAt: new Date(note.createdAt),
+    updatedAt: new Date(note.updatedAt),
+  });
 
 }
 
