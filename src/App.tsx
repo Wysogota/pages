@@ -1,14 +1,17 @@
 import { Container } from 'react-bootstrap';
+import Header from './components/Header';
 import Insert from './components/Insert';
 import List from './components/List';
 
 const App = () => {
   return (
-    <Container>
-      <h1>Notes</h1>
+    <>
+    <Header />
+    <Container className='mt-5'>
       <Insert />
       <List />
     </Container>
+    </>
   );
 };
 
