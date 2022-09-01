@@ -1,9 +1,11 @@
 import { autorun, makeAutoObservable, toJS } from 'mobx';
 import { isEmpty } from 'lodash';
 import { Notes, Note } from '../types';
+import { getTestData } from '../api';
 
 class NotesStore {
   public notes: Notes = [];
+  public isFetching = false;
 
   constructor() {
     this.loadFromStorage();
@@ -25,6 +27,22 @@ class NotesStore {
     this.notes = this.notes.map((existedNote) =>
       existedNote.id === note.id ? note : existedNote
     );
+  };
+
+  public clear = () => {
+    this.notes = [];
+  };
+
+  public fetch = () => {
+    this.isFetching = true;
+    getTestData().then((data) => {
+      this.isFetching = false;
+
+      this.notes = data.map((note: Note) => ({
+        ...note,
+        createdAt: new Date(note.createdAt),
+      }));
+    });
   };
 
   private loadFromStorage() {
