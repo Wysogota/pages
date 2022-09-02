@@ -1,4 +1,5 @@
 @import './common/styles/color';
+@import './common/styles/scrollbar.scss';
 
 body {
   background-color: $bg_color  !important;
@@ -17,6 +18,6 @@ code {
 }
 
 *::selection {
-  background-color: $selection_bg_color !important;
-  color: $selection_color !important;
+  background-color: $selection_bg_color  !important;
+  color: $selection_color  !important;
 }

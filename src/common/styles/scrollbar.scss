@@ -1,0 +1,19 @@
+@import './color';
+
+html {
+  scrollbar-color: $item_color transparent;
+  scrollbar-width: 0.25rem;
+}
+
+::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $item_color;
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
