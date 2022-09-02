@@ -24,8 +24,12 @@
 }
 
 .body {
-  min-height: 8rem !important;
-  max-height: 15rem;
+  resize: none;
+  height: 8rem;
+}
+
+.expanded {
+  height: 15rem;
 }
 
 .time {
@@ -33,4 +37,12 @@
   font-size: 0.8rem;
 
   @extend %text-overflow;
+}
+
+.expanded_btn {
+  cursor: pointer;
+
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
