@@ -8,7 +8,7 @@ const Menu = observer(() => {
   const handleFetch = (): void => notesStore.fetch();
 
   return (
-    <Dropdown className='text-end'>
+    <Dropdown className='text-end mt-2 mb-2'>
       <Dropdown.Toggle variant='outline-warning'>
         Menu
       </Dropdown.Toggle>

@@ -8,7 +8,7 @@ const Header = () => {
     <Container as='header' className={styles.header} fluid>
       <Row>
         <Col xs='2' className='m-auto'>
-          <h1 className='mt-1 mb-1'>Notes</h1>
+          <h1 className='m-0'>Notes</h1>
         </Col>
         <Col xs='2' className='m-auto'>
           <Menu />
