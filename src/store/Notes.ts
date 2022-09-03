@@ -6,6 +6,7 @@ import { getTestData } from '../api';
 class NotesStore {
   public notes: Notes = [];
   public isFetching = false;
+  public error = null;
 
   constructor() {
     this.loadFromStorage();
@@ -35,10 +36,16 @@ class NotesStore {
 
   public fetch = () => {
     this.isFetching = true;
-    getTestData().then((data) => {
-      this.isFetching = false;
-      this.notes = data.map((note: Note) => this.formatNote(note));
-    });
+    getTestData().then(this.fetchNotesSuccess, this.fetchNotesError);
+  };
+
+  private fetchNotesSuccess = (notes: Notes) => {
+    this.isFetching = false;
+    this.notes = notes.map((note: Note) => this.formatNote(note));
+  };
+
+  private fetchNotesError = (error: any) => {
+    this.error = error;
   };
 
   private loadFromStorage() {
