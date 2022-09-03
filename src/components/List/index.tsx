@@ -10,9 +10,12 @@ const List = observer(() => {
 
   return (
     <Row as='section'>
-      {notesStore.notes.map((note) =>
-        <Note key={note.id} note={note} />
-      )}
+      {notesStore.notes
+        .slice().sort((a, b) => a.updatedAt.getTime() - b.updatedAt.getTime())
+        .reverse()
+        .map((note) =>
+          <Note key={note.id} note={note} />
+        )}
     </Row>
   );
 });
