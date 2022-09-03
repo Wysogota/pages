@@ -1,17 +1,18 @@
-import { autorun, makeAutoObservable, toJS } from 'mobx';
-import { isEmpty } from 'lodash';
-import { Notes, Note } from '../types';
+import { makeAutoObservable } from 'mobx';
+import { Notes, Note, INotesStore } from '../types';
 import { getTestData } from '../api';
+import { makePersistable } from '../utils/PersistStore';
 
-class NotesStore {
+class NotesStore implements INotesStore {
   public notes: Notes = [];
-  public isFetching = false;
-  public error = null;
+  public isFetching: boolean = false;
+  public error: any = null;
 
   constructor() {
-    this.loadFromStorage();
     makeAutoObservable(this);
-    this.autoSaveToStorage();
+    makePersistable(this, 'notes');
+
+    this.notes = this.notes.map((note: Note) => this.formatNote(note));
   }
 
   public insert = (note: Note) => {
@@ -46,25 +47,6 @@ class NotesStore {
 
   private fetchNotesError = (error: any) => {
     this.error = error;
-  };
-
-  private loadFromStorage() {
-    const loadedData: string | null = localStorage.getItem('notes');
-    if (loadedData) {
-      let notes: Notes = JSON.parse(loadedData).notes;
-      if (!isEmpty(notes)) {
-        this.notes = notes.map((note) => this.formatNote(note));
-      }
-    }
-  }
-
-  private autoSaveToStorage = () => {
-    let firstRun = true;
-    autorun(() => {
-      const json = JSON.stringify(toJS(this));
-      if (!firstRun) localStorage.setItem('notes', json);
-      firstRun = false;
-    });
   };
 
   private formatNote = (note: Note): Note => ({

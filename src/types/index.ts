@@ -12,3 +12,9 @@ export type NoteFormValues = {
   title: string;
   body: string;
 };
+
+export interface INotesStore {
+  notes: Notes,
+  isFetching: boolean,
+  error: any,
+}
