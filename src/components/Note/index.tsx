@@ -44,22 +44,25 @@ const Note = observer((props: propTypes) => {
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
-      >
-        <Form className={noteClasses}>
-          <FormControl as={Field} name='title' placeholder='Enter title' className={titleClasses} />
-          <div className='position-relative'>
-            <FormControl as={TextareaField} name='body' className={bodyClasses} />
-            <ExpandBody isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-          </div>
+      >{({ values }) => {
+        const isValuesChanged = values.body !== body || values.title !== title;
+        return (
+          <Form className={noteClasses}>
+            <FormControl as={Field} name='title' placeholder='Enter title' className={titleClasses} />
+            <div className='position-relative'>
+              <FormControl as={TextareaField} name='body' className={bodyClasses} />
+              <ExpandBody isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+            </div>
 
-          <DateTooltip createdAt={createdAt} updatedAt={updatedAt} />
+            <DateTooltip createdAt={createdAt} updatedAt={updatedAt} />
 
-          <ButtonGroup className='w-100 pt-3'>
-            <Button variant='warning' type='submit'>Update</Button>
-            <Button variant='danger' onClick={handleDelete}>Delete</Button>
-          </ButtonGroup>
-        </Form>
-      </Formik>
+            <ButtonGroup className='w-100 pt-3'>
+              {isValuesChanged && <Button variant='warning' type='submit'>Update</Button>}
+              <Button variant='danger' onClick={handleDelete}>Delete</Button>
+            </ButtonGroup>
+          </Form>
+        );
+      }}</Formik>
     </Col>
   );
 });
