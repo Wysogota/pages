@@ -18,3 +18,8 @@ export interface INotesStore {
   isFetching: boolean,
   error: any,
 }
+
+export type PersistStoreOptions = {
+  name: string,
+  properties?: Array<string>,
+};

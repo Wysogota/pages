@@ -10,9 +10,9 @@ class NotesStore implements INotesStore {
 
   constructor() {
     makeAutoObservable(this);
-    makePersistable(this, 'notes');
+    makePersistable(this, { name: 'notes' });
 
-    this.notes = this.notes.map((note: Note) => this.formatNote(note));
+    this.formatNotes();
   }
 
   public insert = (note: Note) => {
@@ -42,19 +42,20 @@ class NotesStore implements INotesStore {
 
   private fetchNotesSuccess = (notes: Notes) => {
     this.isFetching = false;
-    this.notes = notes.map((note: Note) => this.formatNote(note));
+    this.formatNotes(notes);
   };
 
   private fetchNotesError = (error: any) => {
     this.error = error;
   };
 
-  private formatNote = (note: Note): Note => ({
-    ...note,
-    createdAt: new Date(note.createdAt),
-    updatedAt: new Date(note.updatedAt),
-  });
-
+  private formatNotes = (notes: Notes = this.notes) => {
+    this.notes = notes.map((note: Note) => ({
+      ...note,
+      createdAt: new Date(note.createdAt),
+      updatedAt: new Date(note.updatedAt),
+    }));
+  };
 }
 
 export default new NotesStore();
