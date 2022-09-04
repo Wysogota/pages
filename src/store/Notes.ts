@@ -9,7 +9,7 @@ class NotesStore extends AbstractFetchStore<Notes> implements INotesStore {
   constructor() {
     super();
     makeObservable(this);
-    makePersistable(this, { name: 'notes' });
+    makePersistable(this, { name: 'notes', properties: ['notes'] });
 
     this.formatNotes();
   }

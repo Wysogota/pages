@@ -1,7 +1,8 @@
 import { autorun, toJS } from 'mobx';
 import { PersistStoreOptions } from '../types';
+import { filterObject } from './functions';
 
-class PersistStore<T> {
+class PersistStore<T extends object> {
   private options: PersistStoreOptions;
   private target: T;
 
@@ -14,19 +15,10 @@ class PersistStore<T> {
   }
 
   private load() {
-    const { name, properties } = this.options;
-    const loadedData: string | null = localStorage.getItem(name);
-
+    const loadedData: string | null = localStorage.getItem(this.options.name);
     if (loadedData) {
       const parsedData = JSON.parse(loadedData);
-
-      const filteredData = Object.fromEntries(
-        Object.entries(parsedData).filter(([key]) =>
-          properties ? properties.includes(key) : true
-        )
-      );
-
-      Object.entries(filteredData).forEach(([key, value]: any) => {
+      Object.entries(parsedData).forEach(([key, value]: any) => {
         this.target[key as keyof T] = value;
       });
     }
@@ -35,14 +27,20 @@ class PersistStore<T> {
   private autoSave = () => {
     let firstRun = true;
     autorun(() => {
-      const json = JSON.stringify(toJS(this.target));
+      const jsStore: T = toJS(this.target);
+      const filteredStore = filterObject(jsStore, ([key]) => {
+        const { properties } = this.options;
+        return properties ? properties.includes(key.toString()) : true;
+      });
+      const json = JSON.stringify(filteredStore);
+
       if (!firstRun) localStorage.setItem(this.options.name, json);
       firstRun = false;
     });
   };
 }
 
-const makePersistable = <T>(target: T, options: PersistStoreOptions) => {
+const makePersistable = <T extends object>(target: T, options: PersistStoreOptions) => {
   new PersistStore<T>(target, options);
 };
 
