@@ -1,55 +1,55 @@
-import { makeAutoObservable } from 'mobx';
-import { Notes, Note, INotesStore } from '../types';
+import { makeObservable, action, observable } from 'mobx';
+import { Notes, Note, INotesStore, AbstractFetchStore } from '../types';
 import { getTestData } from '../api';
 import { makePersistable } from '../utils/PersistStore';
 
-class NotesStore implements INotesStore {
-  public notes: Notes = [];
-  public isFetching: boolean = false;
-  public error: any = null;
+class NotesStore extends AbstractFetchStore<Notes> implements INotesStore {
+  @observable public notes: Notes = [];
 
   constructor() {
-    makeAutoObservable(this);
+    super();
+    makeObservable(this);
     makePersistable(this, { name: 'notes' });
 
     this.formatNotes();
   }
 
-  public insert = (note: Note) => {
+  @action public insert = (note: Note) => {
     this.notes.push(note);
   };
 
-  public remove = (id: string) => {
+  @action public remove = (id: string) => {
     this.notes = this.notes.filter(
       ({ id: noteId }) => noteId !== id
     );
   };
 
-  public edit = (note: Note) => {
+  @action public edit = (note: Note) => {
     this.notes = this.notes.map((existedNote) =>
       existedNote.id === note.id ? note : existedNote
     );
   };
 
-  public clear = () => {
+  @action public clear = () => {
     this.notes = [];
   };
 
-  public fetch = () => {
+  @action public fetch = () => {
     this.isFetching = true;
-    getTestData().then(this.fetchNotesSuccess, this.fetchNotesError);
+    getTestData().then(this.fetchSuccess, this.fetchError);
   };
 
-  private fetchNotesSuccess = (notes: Notes) => {
+  @action protected fetchSuccess = (notes: Notes) => {
     this.isFetching = false;
     this.formatNotes(notes);
   };
 
-  private fetchNotesError = (error: any) => {
+  @action protected fetchError = (error: any) => {
+    this.isFetching = false;
     this.error = error;
   };
 
-  private formatNotes = (notes: Notes = this.notes) => {
+  @action private formatNotes = (notes: Notes = this.notes) => {
     this.notes = notes.map((note: Note) => ({
       ...note,
       createdAt: new Date(note.createdAt),
